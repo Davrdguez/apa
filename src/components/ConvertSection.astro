@@ -1,0 +1,96 @@
+---
+---
+<section id="convert" class="bg-[#f6f5f2] py-24 px-4">
+  <div class="max-w-3xl mx-auto text-center">
+    <h2 class="text-3xl font-bold text-[#1f2937] mb-2">Sube tu archivo Word</h2>
+    <p class="text-gray-600 mb-8">
+      Aceptamos archivos .docx. El proceso es 100% automático.
+    </p>
+
+    <form id="uploadForm" enctype="multipart/form-data"
+      class="bg-white p-6 rounded-2xl shadow border border-[#e5e7eb] space-y-5 text-left">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input name="titulo" placeholder="Título del trabajo" required class="w-full border border-[#e5e7eb] p-3 rounded-lg text-sm text-gray-800 placeholder-gray-500 bg-white" />
+        <input name="autor" placeholder="Nombre del autor" required class="w-full border border-[#e5e7eb] p-3 rounded-lg text-sm text-gray-800 placeholder-gray-500 bg-white" />
+        <input name="institucion" placeholder="Nombre de la institución" required class="w-full border border-[#e5e7eb] p-3 rounded-lg text-sm text-gray-800 placeholder-gray-500 bg-white" />
+        <input name="carrera" placeholder="Carrera o programa" required class="w-full border border-[#e5e7eb] p-3 rounded-lg text-sm text-gray-800 placeholder-gray-500 bg-white" />
+        <input name="profesor" placeholder="Profesor o tutor" required class="w-full border border-[#e5e7eb] p-3 rounded-lg text-sm text-gray-800 placeholder-gray-500 bg-white" />
+        <input name="ubicacion" placeholder="Ciudad, país" required class="w-full border border-[#e5e7eb] p-3 rounded-lg text-sm text-gray-800 placeholder-gray-500 bg-white" />
+        <input name="fecha" placeholder="Fecha (por ej. 16 de abril de 2025)" required class="w-full border border-[#e5e7eb] p-3 rounded-lg text-sm text-gray-800 placeholder-gray-500 bg-white md:col-span-2" />
+      </div>
+
+      <textarea name="referencias" rows="4" placeholder="Pega aquí tus referencias, una por línea" class="w-full border border-[#e5e7eb] p-3 rounded-lg text-sm text-gray-800 placeholder-gray-500 bg-white resize-none"></textarea>
+
+      <input name="file" type="file" accept=".docx" required class="w-full border border-[#e5e7eb] p-3 rounded-lg text-sm bg-[#f9fafb] text-gray-800 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200" />
+
+      <button type="submit" id="submitBtn"
+        class="w-full bg-[#f76300] hover:bg-orange-700 text-white py-3 rounded-full font-semibold transition">
+        Convertir a APA
+      </button>
+
+      <!-- Spinner de carga -->
+      <div id="loading" class="mt-4 hidden flex items-center justify-center gap-2 text-sm text-gray-600 font-medium">
+        <svg class="animate-spin h-5 w-5 text-[#f76300]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 00-8 8z"></path>
+        </svg>
+        Procesando archivo...
+      </div>
+
+      <!-- Resultado -->
+      <div id="result" class="mt-4 hidden text-center">
+        <p class="text-green-600 font-medium">
+          ¡Documento convertido! <a id="downloadLink" class="underline text-blue-600" href="#">Descargar archivo</a>
+        </p>
+      </div>
+    </form>
+  </div>
+
+  <script type="module">
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('uploadForm');
+      const downloadLink = document.getElementById('downloadLink');
+      const result = document.getElementById('result');
+      const loading = document.getElementById('loading');
+      const submitBtn = document.getElementById('submitBtn');
+
+      if (!form || !downloadLink || !result || !loading) return;
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        result.classList.add('hidden');
+        loading.classList.remove('hidden');
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Convirtiendo...";
+
+        const formData = new FormData(form);
+
+        try {
+          const res = await fetch('http://localhost:8000/upload', {
+            method: 'POST',
+            body: formData
+          });
+
+          if (res.ok) {
+            const blob = await res.blob();
+            const url = URL.createObjectURL(blob);
+            downloadLink.href = url;
+            downloadLink.download = "APA_convertido.docx";
+            result.classList.remove('hidden');
+          } else {
+            alert("Hubo un error al convertir el archivo.");
+          }
+        } catch (error) {
+          console.error(error);
+          alert("Hubo un error al conectar con el servidor.");
+        } finally {
+          loading.classList.add('hidden');
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Convertir a APA";
+        }
+      });
+    });
+  </script>
+</section>
