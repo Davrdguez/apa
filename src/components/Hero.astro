@@ -1,27 +1,36 @@
----
----
+<section id="hero" class="text-center pt-24 pb-32 bg-[#f6f5f2] relative overflow-hidden opacity-0 translate-y-5">
+  <div class="max-w-3xl mx-auto px-4">
+    <h1 class="text-4xl md:text-6xl font-bold leading-tight text-black">
+      Convierte tu Trabajo Académico<br />
+      al <span class="text-orange-500">Formato APA Perfecto</span>
+    </h1>
 
-<section class="text-center pt-24 pb-32 bg-[#f6f5f2] relative overflow-hidden">
-    <div class="max-w-3xl mx-auto px-4">
-      <h1 class="text-4xl md:text-6xl font-bold leading-tight text-black">
-        Convierte tu Trabajo Académico<br />
-        al <span class="text-orange-500">Formato APA Perfecto</span>
-      </h1>
-  
-      <p class="mt-6 text-lg text-gray-700">
-        La herramienta más precisa para transformar automáticamente tus documentos Word (.docx) al formato APA: portada, márgenes, fuente, interlineado, títulos y referencias.
-      </p>
-  
-      <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-        <a href="#convert" class="px-6 py-3 rounded-full border border-black text-black font-medium hover:bg-black hover:text-white transition">
-          Usar versión web
-        </a>
-        <a href="#" class="px-6 py-3 rounded-full bg-black text-white font-medium hover:scale-105 transition shadow-lg">
-          Descargar para Windows
-        </a>
-      </div>
-  
-      <p class="mt-4 text-sm text-gray-500">Próximamente: versiones móviles y multiplataforma</p>
+    <p class="mt-6 text-lg text-gray-700">
+      La herramienta más precisa para transformar automáticamente tus documentos Word (.docx) al formato APA: portada, márgenes, fuente, interlineado, títulos y referencias.
+    </p>
+
+    <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+      <a href="#convert" class="px-6 py-3 rounded-full border border-black text-black font-medium hover:bg-black hover:text-white transition">
+        Usar versión web
+      </a>
+      <a href="#" class="px-6 py-3 rounded-full bg-black text-white font-medium hover:scale-105 transition shadow-lg">
+        Descargar para Windows
+      </a>
     </div>
-  </section>
-  
+
+    <p class="mt-4 text-sm text-gray-500">Próximamente: versiones móviles y multiplataforma</p>
+  </div>
+</section>
+
+<!-- Carga de anime.js desde CDN y animación -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" client:load></script>
+<script type="module" client:load>
+  anime({
+    targets: '#hero',
+    opacity: [0, 1],
+    translateY: [110, 0],
+    easing: 'easeOutQuad',
+    duration: 1000,
+    delay: 100
+  });
+</script>

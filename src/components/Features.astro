@@ -1,13 +1,11 @@
 ---
 ---
-
 <section id="how" class="bg-[#f6f5f2] py-24 px-4 text-center">
   <div class="max-w-4xl mx-auto">
 
     <!-- Icono principal -->
     <div class="flex justify-center mb-4">
       <div class="w-10 h-10 rounded-xl bg-black text-white flex items-center justify-center">
-        <!-- FileText SVG -->
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
           <polyline points="14 2 14 8 20 8" />
@@ -26,9 +24,9 @@
 
     <!-- Beneficios -->
     <div class="grid md:grid-cols-3 gap-8 text-left text-sm text-gray-800">
-      
+
       <!-- Subir -->
-      <div class="flex items-start space-x-3">
+      <div class="how-item opacity-0 -translate-x-10 flex items-start space-x-3">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mt-1 text-[#f76300]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
           <polyline points="17 8 12 3 7 8" />
@@ -41,7 +39,7 @@
       </div>
 
       <!-- Convertir -->
-      <div class="flex items-start space-x-3">
+      <div class="how-item opacity-0 -translate-x-10 flex items-start space-x-3">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mt-1 text-[#f76300]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path d="M12 1v22" />
           <path d="M17 5H9a3 3 0 0 0-3 3v4a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3z" />
@@ -53,7 +51,7 @@
       </div>
 
       <!-- Referencias -->
-      <div class="flex items-start space-x-3">
+      <div class="how-item opacity-0 -translate-x-10 flex items-start space-x-3">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mt-1 text-[#f76300]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20" />
           <path d="M20 2H6.5A2.5 2.5 0 0 0 4 4.5v15" />
@@ -70,3 +68,28 @@
     </div>
   </div>
 </section>
+
+<!-- Anime.js + IntersectionObserver -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" client:load></script>
+
+<script type="module" client:load>
+  const items = document.querySelectorAll('.how-item');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        anime({
+          targets: entry.target,
+          opacity: [0, 1],
+          translateX: [-40, 0],
+          duration: 800,
+          delay: index * 150,
+          easing: 'easeOutQuad',
+        });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  items.forEach(item => observer.observe(item));
+</script>
